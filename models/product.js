@@ -7,14 +7,18 @@ class Product {
     this.description = description;
     this.imageUrl = imageUrl;
   }
+
   save() {
     const db = getDb();
-    db.collection("products")
+    return db
+      .collection("products")
       .insertOne(this)
-      .then((results) => {
-        console.log(results);
+      .then((result) => {
+        console.log(result);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }
 }
 
