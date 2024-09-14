@@ -39,6 +39,9 @@ class Product {
 
   static findByPk(prodId) {
     const db = getDb();
+    if (!mongodb.ObjectId.isValid(prodId)) {
+      return Promise.reject(new Error("Invalid product ID format"));
+    }
     return db
       .collection("products")
       .find({ _id: new mongodb.ObjectId(prodId) })
