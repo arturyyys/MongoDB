@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const errorController = require("./controllers/error");
-const User = require("./models/user");
+// const User = require("./models/user");
 
 const app = express();
 
@@ -18,14 +18,14 @@ const shopRoutes = require("./routes/shop");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res, next) => {
-  User.findByPk("66e72217ed3db7af90af7204")
-    .then((user) => {
-      req.user = new User(user.name, user.email, user.cart, user._id);
-      next();
-    })
-    .catch((err) => console.log(err));
-});
+// app.use((req, res, next) => {
+//   User.findByPk("66e72217ed3db7af90af7204")
+//     .then((user) => {
+//       req.user = new User(user.name, user.email, user.cart, user._id);
+//       next();
+//     })
+//     .catch((err) => console.log(err));
+// });
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
@@ -34,7 +34,7 @@ app.use(errorController.get404);
 
 mongoose
   .connect(
-    "mongodb+srv://arturyyys:Astuoni88888888@cluster0.pozcl.mongodb.net/"
+    "mongodb+srv://arturyyys:Astuoni88888888@cluster0.pozcl.mongodb.net/shop?retryWrites=true"
   )
   .then((result) => {
     app.listen(3000);
