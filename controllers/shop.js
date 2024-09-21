@@ -19,8 +19,6 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-
-  // Check if prodId is a valid ObjectId
   if (!mongoose.Types.ObjectId.isValid(prodId)) {
     return res.status(400).send("Invalid Product ID");
   }
@@ -58,9 +56,9 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .populate("cart.items.productId") // Populates the product details from productId in cart
+    .populate("cart.items.productId")
     .then((user) => {
-      const products = user.cart.items; // Now user.cart.items contains the populated products
+      const products = user.cart.items;
       res.render("shop/cart", {
         path: "/cart",
         pageTitle: "Your Cart",
