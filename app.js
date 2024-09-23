@@ -37,7 +37,10 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  User.findById("66ec5f1262daf7eeff91e6f8")
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
     .then((user) => {
       req.user = user;
       next();
@@ -59,7 +62,9 @@ mongoose
         const user = new User({
           name: "Arthur",
           email: "artur@example.com",
-          cart: { items: [] },
+          cart: {
+            items: [],
+          },
         });
         user.save();
       }
